@@ -5,6 +5,7 @@ import de.viadee.discretizers4j.CategoricalDiscretizationOrigin;
 import de.viadee.discretizers4j.DiscretizationTransition;
 
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,10 @@ import java.util.stream.Collectors;
  * Discretizer mapping each value type to a unique integer value
  */
 public class UniqueValueDiscretizer extends AbstractDiscretizer {
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
     private static final long serialVersionUID = -6185947730488220070L;
 
     /**

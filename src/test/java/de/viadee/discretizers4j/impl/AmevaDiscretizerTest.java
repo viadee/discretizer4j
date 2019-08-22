@@ -147,7 +147,8 @@ class AmevaDiscretizerTest {
         }
 
         AmevaDiscretizer amevaDiscretizer = new AmevaDiscretizer();
-        List<DiscretizationTransition> list = amevaDiscretizer.fitCreateTransitions(serializables, doubles);
+        amevaDiscretizer.fit(serializables, doubles);
+        List<DiscretizationTransition> list = new ArrayList<>(amevaDiscretizer.getTransitions());
         assertEquals(1, list.size());
     }
 

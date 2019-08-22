@@ -1,8 +1,12 @@
 package de.viadee.discretizers4j;
 
+import de.viadee.discretizers4j.impl.UniqueValueDiscretizer;
+
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Abstract discretizer managing both the discretization and un-discretization for all discretizers that choose to work
@@ -55,7 +59,20 @@ public abstract class AbstractDiscretizer implements Discretizer {
             throw new IllegalArgumentException("Discretizer has already been fitted");
         }
 
-        this.discretizationTransitions = fitCreateTransitions(values, labels);
+        if(Stream.of(values).anyMatch(v -> !(v instanceof Number)) && !(this instanceof UniqueValueDiscretizer)) {
+            throw new IllegalArgumentException("Non-Numeric values can only be discretized with UniqueValue");
+        }
+
+        if(labels == null) {
+            Arrays.sort(values);
+            this.discretizationTransitions = fitCreateTransitions(values, labels);
+        } else {
+            List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs = IntStream.range(0, values.length)
+                    .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
+                    .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
+                    .collect(Collectors.toList());
+            this.discretizationTransitions = fitCreateTransitions(keyValuePairs);
+        }
 
         final long distinctDiscretizedValues = discretizationTransitions.stream()
                 .map(DiscretizationTransition::getDiscretizedValue).distinct().count();
@@ -91,6 +108,14 @@ public abstract class AbstractDiscretizer implements Discretizer {
      * @return a {@link Collection} containing the {@link DiscretizationTransition}s
      */
     protected abstract List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels);
+
+    /**
+     * Fits on the data
+     *
+     * @param keyValuePairs the values and labels to be fitted
+     * @return a {@link Collection} containing the {@link DiscretizationTransition}s
+     */
+    protected abstract List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs);
 
     @Override
     public Double apply(Serializable serializable) {

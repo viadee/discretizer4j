@@ -19,6 +19,10 @@ import java.util.stream.Stream;
  * A new upper class might be created during fit to include the max values
  */
 public class ManualDiscretizer extends AbstractDiscretizer {
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
     private final SortedSet<Double> classBoundaries;
 
     /**

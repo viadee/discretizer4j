@@ -28,35 +28,32 @@ public class AmevaDiscretizer extends AbstractSupervisedDiscretizer {
         super(true);
     }
 
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
+        return null;
+    }
+
     /**
      * Implementation of Ameva, 1. sort values and get all CutPoints, 2. Consecutively add new cut points and determine
      * Ameva value (variation of contingency coefficient) of the tentative cut points. Get best cut point of this
      * iteration. If the ameva value does not increase with new cut points break and return Discretization
      *
-     * @param labels Array of Doubles, classifications of instances
-     * @param values Array of Numbers expected. Ameva is only possible with continuous variables
+     * @param keyValuePairs List of Values and Labels
      * @return list of DiscretizationTransition determined to have the highest Ameva value
      */
     @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-
-        if (Stream.of(values).anyMatch(v -> !(v instanceof Number))) {
-            throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-        }
-        targetValues = Arrays.stream(labels).sorted().distinct().toArray(Double[]::new);
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        this.keyValuePairs = keyValuePairs;
+        targetValues = keyValuePairs.stream().map(AbstractMap.SimpleImmutableEntry::getValue).sorted().distinct().toArray(Double[]::new);
         targetValueDistribution = new long[targetValues.length];
         for (int i = 0; i < targetValues.length; i++) {
             int finalI = i;
-            targetValueDistribution[i] = Arrays.stream(labels).filter(label -> label.equals(targetValues[finalI])).count();
+            targetValueDistribution[i] = keyValuePairs.stream().map(AbstractMap.SimpleImmutableEntry::getValue)
+                                        .filter(label -> label.equals(targetValues[finalI])).count();
         }
 
-        keyValuePairs = IntStream.range(0, values.length)
-                .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
-                .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
-                .collect(Collectors.toList());
-
-        bCutPoints = IntStream.range(1, values.length)
-                .mapToObj(i -> (((Number) values[i]).doubleValue() + ((Number) values[i - 1]).doubleValue()) / 2)
+        bCutPoints = IntStream.range(1, keyValuePairs.size())
+                .mapToObj(i -> (((Number) keyValuePairs.get(i).getKey()).doubleValue() + ((Number) keyValuePairs.get(i).getKey()).doubleValue() / 2))
                         .sorted().distinct()
                         .collect(Collectors.toList());
 

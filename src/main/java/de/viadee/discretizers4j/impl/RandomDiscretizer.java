@@ -4,6 +4,7 @@ import de.viadee.discretizers4j.AbstractDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +17,10 @@ import java.util.stream.Stream;
  *
  */
 public class RandomDiscretizer extends AbstractDiscretizer {
+	@Override
+	protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+		return null;
+	}
 
 	/**
 	 *

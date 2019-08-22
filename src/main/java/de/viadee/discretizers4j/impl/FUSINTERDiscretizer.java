@@ -14,7 +14,10 @@ import java.util.stream.Stream;
  * Implementation of the FUSINTER discretization algorithm described by [Zighed, Rabaséda, Rakotomalala 1998]
  */
 public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
-
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
     private final double lambda;
     private final double alpha;
 

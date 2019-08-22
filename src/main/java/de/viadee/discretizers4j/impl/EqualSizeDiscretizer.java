@@ -4,13 +4,17 @@ import de.viadee.discretizers4j.AbstractDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.List;
 
 /**
  * Implementation of the PKID and ESD discretization algorithms described by [Yang and Webb 2009]
  */
 public class EqualSizeDiscretizer extends AbstractDiscretizer {
-
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
     private int classSize;
 
     /**

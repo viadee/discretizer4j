@@ -67,6 +67,11 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
         return evaluatedIntervals.stream().map(Interval::toDiscretizationTransition).collect(Collectors.toList());
     }
 
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
+
     /**
      * (RECURSIVE) determine the best cut points for value from index begin to end in keyValuePairs.
      *

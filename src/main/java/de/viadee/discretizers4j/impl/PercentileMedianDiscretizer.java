@@ -14,6 +14,10 @@ import java.util.stream.Stream;
  * Discretizer partitioning data into n specified classes using their mean values as a class label
  */
 public class PercentileMedianDiscretizer extends AbstractDiscretizer {
+    @Override
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        return null;
+    }
     private final boolean classReduction;
     private int classCount;
 
