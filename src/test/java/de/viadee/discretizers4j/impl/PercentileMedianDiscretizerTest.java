@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PercentileMedianDiscretizerTest {
 
     @Test
-    public void testErrorThrownOnNonNumbers() {
+    void testErrorThrownOnNonNumbers() {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         assertThrows(IllegalArgumentException.class, () ->
                 percentileMedianDiscretizer.fit(new Serializable[]{1, 2, "thisshouldbreakeverything"}));
@@ -21,7 +21,7 @@ class PercentileMedianDiscretizerTest {
     }
 
     @Test
-    public void testFittingAllowedOnceOnly() {
+    void testFittingAllowedOnceOnly() {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         percentileMedianDiscretizer.fit(new Integer[]{1, 2, 3});
         assertThrows(IllegalArgumentException.class, () ->
@@ -29,7 +29,7 @@ class PercentileMedianDiscretizerTest {
     }
 
     @Test
-    public void testDiscretizationOdd() {
+    void testDiscretizationOdd() {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         percentileMedianDiscretizer.fit(new Double[]{1D, 2D, 3D, 0.2, 1.3, 2.4});
         Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{1D, 1.9, 2.9});
@@ -37,7 +37,7 @@ class PercentileMedianDiscretizerTest {
     }
 
     @Test
-    public void testDiscretizationEven() {
+    void testDiscretizationEven() {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         percentileMedianDiscretizer.fit(IntStream.range(1, 21).boxed().toArray(Integer[]::new));
         Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{4D, 2D, 10D, 20D});
@@ -45,7 +45,7 @@ class PercentileMedianDiscretizerTest {
     }
 
     @Test
-    public void testClassReduction() {
+    void testClassReduction() {
         PercentileMedianDiscretizer failingDiscretizer = new PercentileMedianDiscretizer(3, false);
         assertThrows(IllegalArgumentException.class, () ->
                 failingDiscretizer.fit(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 15}));
@@ -56,5 +56,4 @@ class PercentileMedianDiscretizerTest {
         Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{0D, 5D, 10D, 15D});
         assertArrayEquals(new Double[]{0D, 10D, 10D, 10D}, discretization);
     }
-
 }
