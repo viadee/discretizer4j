@@ -44,9 +44,6 @@ public class ManualDiscretizer extends AbstractDiscretizer {
 
     @Override
     protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-        if (Stream.of(values).anyMatch(v -> !(v instanceof Number)))
-            throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-
         final List<DiscretizationTransition> result = new ArrayList<>();
 
         final List<Double> vals = Stream.of(values).map(v -> ((Number) v).doubleValue()).collect(Collectors.toList());

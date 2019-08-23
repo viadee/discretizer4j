@@ -28,7 +28,7 @@ class EqualSizeDiscretizerTest {
     @Test
     void testPKIDWithReduction() {
         Number[] values = {
-                0, 0, 0, 0, 0, 0, 0, 0, 8, 9, 10, 11, 12, 13, 14, 15
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 11, 12, 13, 14, 15
         };
 
         EqualSizeDiscretizer equalSizeDiscretizer = new EqualSizeDiscretizer();
@@ -74,7 +74,7 @@ class EqualSizeDiscretizerTest {
         equalSizeDiscretizer.fit(values);
         Collection<DiscretizationTransition> transitionList = equalSizeDiscretizer.getTransitions();
 
-        assertEquals(0, transitionList.size());
+        assertEquals(1, transitionList.size());
     }
 
     @Test
@@ -92,22 +92,22 @@ class EqualSizeDiscretizerTest {
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(0).getDiscretizationOrigin());
         assertEquals(0D, discOrigin.getMinValue());
-        assertEquals(4D, discOrigin.getMaxValue());
-        assertEquals(2D, list.get(0).getDiscretizedValue().doubleValue());
+        assertEquals(4.5, discOrigin.getMaxValue());
+        assertEquals(0D, list.get(0).getDiscretizedValue().doubleValue());
         assertTrue(discOrigin.isFirst());
         assertFalse(discOrigin.isLast());
 
         NumericDiscretizationOrigin discOrigin1 = ((NumericDiscretizationOrigin) list.get(1).getDiscretizationOrigin());
-        assertEquals(5D, discOrigin1.getMinValue());
-        assertEquals(9D, discOrigin1.getMaxValue());
-        assertEquals(7D, list.get(1).getDiscretizedValue().doubleValue());
+        assertEquals(4.5, discOrigin1.getMinValue());
+        assertEquals(9.5, discOrigin1.getMaxValue());
+        assertEquals(1D, list.get(1).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin1.isFirst());
         assertFalse(discOrigin1.isLast());
 
         NumericDiscretizationOrigin discOrigin5 = ((NumericDiscretizationOrigin) list.get(5).getDiscretizationOrigin());
-        assertEquals(25D, discOrigin5.getMinValue());
+        assertEquals(24.5, discOrigin5.getMinValue());
         assertEquals(29D, discOrigin5.getMaxValue());
-        assertEquals(27D, list.get(5).getDiscretizedValue().doubleValue());
+        assertEquals(5D, list.get(5).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin5.isFirst());
         assertTrue(discOrigin5.isLast());
     }

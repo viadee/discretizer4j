@@ -36,6 +36,6 @@ public final class DiscretizationTransition {
     @Override
     public String toString() {
         return "DiscretizationTransition From " + discretizationOrigin.toString() +
-                " to class " + FormatTools.roundToTwo(discretizedValue);
+                " to class " + discretizedValue;
     }
 }

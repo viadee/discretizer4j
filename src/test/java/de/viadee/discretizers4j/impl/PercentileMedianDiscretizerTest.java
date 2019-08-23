@@ -1,12 +1,14 @@
 package de.viadee.discretizers4j.impl;
 
+import de.viadee.discretizers4j.DiscretizationTransition;
 import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PercentileMedianDiscretizerTest {
 
@@ -33,7 +35,7 @@ class PercentileMedianDiscretizerTest {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         percentileMedianDiscretizer.fit(new Double[]{1D, 2D, 3D, 0.2, 1.3, 2.4});
         Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{1D, 1.9, 2.9});
-        assertArrayEquals(new Double[]{0.6, 1.65, 2.7}, discretization);
+        assertArrayEquals(new Double[]{0D, 1D, 2D}, discretization);
     }
 
     @Test
@@ -41,19 +43,16 @@ class PercentileMedianDiscretizerTest {
         PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
         percentileMedianDiscretizer.fit(IntStream.range(1, 21).boxed().toArray(Integer[]::new));
         Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{4D, 2D, 10D, 20D});
-        assertArrayEquals(new Double[]{4D, 4D, 11D, 17.5}, discretization);
+        assertArrayEquals(new Double[]{0D, 0D, 1D, 2D}, discretization);
     }
 
     @Test
     void testClassReduction() {
-        PercentileMedianDiscretizer failingDiscretizer = new PercentileMedianDiscretizer(3, false);
-        assertThrows(IllegalArgumentException.class, () ->
-                failingDiscretizer.fit(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 15}));
+        PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, false);
+        percentileMedianDiscretizer.fit(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
 
-        PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer(3, true);
-        percentileMedianDiscretizer.fit(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 15});
+        List<DiscretizationTransition> list = new ArrayList<>(percentileMedianDiscretizer.getTransitions());
+        assertEquals(2, list.size());
 
-        Double[] discretization = percentileMedianDiscretizer.apply(new Double[]{0D, 5D, 10D, 15D});
-        assertArrayEquals(new Double[]{0D, 10D, 10D, 10D}, discretization);
     }
 }

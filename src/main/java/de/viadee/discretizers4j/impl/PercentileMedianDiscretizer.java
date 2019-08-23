@@ -69,41 +69,34 @@ public class PercentileMedianDiscretizer extends AbstractDiscretizer {
 
     @Override
     protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-        if (Stream.of(values).anyMatch(v -> !(v instanceof Number))) {
-            throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-        }
-
-        List<DiscretizationTransition> result = new ArrayList<>();
 
         List<Number> numbers = Stream.of(values).map(i -> (Number) i)
                 .sorted(Comparator.comparingDouble(Number::doubleValue))
                 .collect(Collectors.toList());
 
+        List<Double> actualCutPoints = new ArrayList<>();
+
         final int classes = Math.min(classCount, numbers.size());
         final int countPerClass = numbers.size() / classes;
         int backlog = numbers.size() % classes;
-        int endIndex = 0;
-        for (int currentClass = 0; currentClass < classes; currentClass++) {
-            final int startIndex = endIndex;
-            endIndex = startIndex + countPerClass;
+        int endIndex = countPerClass - 1;
+        for (int currentClass = 1; currentClass < classes; currentClass++) {
             if (backlog > 0) {
                 endIndex++;
                 backlog--;
             }
-            List<Number> sublist = numbers.subList(startIndex, endIndex);
-            final Double medianValue = medianIndexValue(sublist);
-
-            result.add(new DiscretizationTransition(
-                    new NumericDiscretizationOrigin(sublist.get(0).doubleValue(),
-                            sublist.get(sublist.size() - 1).doubleValue()), medianValue));
-
+            actualCutPoints.add(
+                    (((Number) values[endIndex]).doubleValue()
+                            + ((Number) values[endIndex + 1]).doubleValue()) / 2);
+            endIndex = endIndex + countPerClass;
         }
+        List<DiscretizationTransition> result = getDiscretizationTransitionsFromDouble(actualCutPoints, ((Number) values[0]).doubleValue(), ((Number) values[values.length - 1]).doubleValue());
 
-        if (this.classReduction) {
-            removeDuplicateDiscretizedValues(result);
-        }
-
-        distinctMinAndMaxValues(numbers, result);
+//        if (this.classReduction) {
+//            removeDuplicateDiscretizedValues(result);
+//        }
+//
+//        distinctMinAndMaxValues(numbers, result);
 
         return result;
     }

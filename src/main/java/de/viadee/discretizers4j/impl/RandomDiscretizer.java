@@ -30,9 +30,6 @@ public class RandomDiscretizer extends AbstractDiscretizer {
 
 	@Override
 	protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-		if (Stream.of(values).anyMatch(v -> !(v instanceof Number))) {
-			throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-		}
 
 		final List<Double> valsDistinct = Stream.of(values).distinct().map(v -> ((Number) v).doubleValue()).sorted()
 				.collect(Collectors.toList());

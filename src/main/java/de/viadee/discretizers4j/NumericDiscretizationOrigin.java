@@ -34,7 +34,7 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
         final Number value = (Number) originalValue;
 
         final boolean matchesLower = isFirst || value.doubleValue() >= minValue.doubleValue();
-        final boolean matchesUpper = isLast || value.doubleValue() <= maxValue.doubleValue();
+        final boolean matchesUpper = isLast || value.doubleValue() < maxValue.doubleValue();
         return (matchesLower && matchesUpper);
     }
 

@@ -115,4 +115,30 @@ public abstract class AbstractDiscretizer implements Discretizer {
                 .orElseThrow(() -> new IllegalArgumentException("Could not find transition for " + serializable));
         return discretizationTransition.getDiscretizedValue();
     }
+
+    protected final List<DiscretizationTransition> getDiscretizationTransitionsFromDouble(List<Double> actualCutPoints, Double min, Double max) {
+        final List<DiscretizationTransition> result = new ArrayList<>();
+        actualCutPoints = actualCutPoints.stream().sorted().distinct().collect(Collectors.toList());
+
+        Double currentLowerBoundary = min;
+        double index = 0D;
+
+        for (Double cutPoint : actualCutPoints) {
+            result.add(new DiscretizationTransition(
+                    new NumericDiscretizationOrigin(currentLowerBoundary, cutPoint),
+                    index));
+            currentLowerBoundary = cutPoint;
+            index++;
+        }
+
+        if (result.isEmpty()
+                || (!((NumericDiscretizationOrigin) result.get(result.size() - 1).getDiscretizationOrigin()).getMaxValue().equals(max)
+                || !((NumericDiscretizationOrigin) result.get(result.size() - 1).getDiscretizationOrigin()).getMinValue().equals(max))) {
+            result.add(new DiscretizationTransition(
+                    new NumericDiscretizationOrigin(currentLowerBoundary, max),
+                    index));
+        }
+
+        return result;
+    }
 }
