@@ -146,7 +146,8 @@ class MDLPDiscretizerTest {
         }
 
         MDLPDiscretizer mdlpDiscretizer = new MDLPDiscretizer();
-        List<DiscretizationTransition> list = mdlpDiscretizer.fitCreateTransitions(serializables, doubles);
+        mdlpDiscretizer.fit(serializables, doubles);
+        List<DiscretizationTransition> list = new ArrayList<>(mdlpDiscretizer.getTransitions());
         assertEquals(1, list.size());
     }
 

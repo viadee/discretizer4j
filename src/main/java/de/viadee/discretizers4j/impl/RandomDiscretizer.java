@@ -17,11 +17,6 @@ import java.util.stream.Stream;
  *
  */
 public class RandomDiscretizer extends AbstractDiscretizer {
-	@Override
-	protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
-		return null;
-	}
-
 	/**
 	 *
 	 */

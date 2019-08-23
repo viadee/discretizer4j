@@ -30,21 +30,12 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
      * 3. Search for cut point which splits the values into the best "bi-partition".
      * 4. Repeat [3] for each part until no improvement is possible (recursive)
      *
-     * @param labels Array of Doubles, classifications of instances
-     * @param values Array of Numbers expected. Ameva is only possible with continuous variables
+     * @param keyValuePairs List of Values and Labels
      * @return list of DiscretizationTransition determined to have the highest Ameva value
      */
     @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-        if (Stream.of(values).anyMatch(v -> !(v instanceof Number))) {
-            throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-        }
-
-        keyValuePairs = IntStream.range(0, values.length)
-                .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
-                .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
-                .collect(Collectors.toList());
-
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
+        this.keyValuePairs = keyValuePairs;
         targetValues = keyValuePairs.stream().map(AbstractMap.SimpleImmutableEntry::getValue).sorted().distinct().toArray(Double[]::new);
 
         List<Interval> initialSplit = equalClassSplit(keyValuePairs);
@@ -65,11 +56,6 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
         evaluatedIntervals.add(new Interval(begin, keyValuePairs.size() - 1, keyValuePairs));
 
         return evaluatedIntervals.stream().map(Interval::toDiscretizationTransition).collect(Collectors.toList());
-    }
-
-    @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
-        return null;
     }
 
     /**

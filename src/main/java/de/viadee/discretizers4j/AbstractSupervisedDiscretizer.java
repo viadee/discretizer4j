@@ -1,8 +1,9 @@
 package de.viadee.discretizers4j;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public abstract class AbstractSupervisedDiscretizer extends AbstractDiscretizer {
 
@@ -46,7 +47,7 @@ public abstract class AbstractSupervisedDiscretizer extends AbstractDiscretizer 
 
                     if (i != keyValuePairs.size() - 1 && !keyValuePairs.get(i + 1).getKey().equals(keyValuePairs.get(i).getKey())) {
                         lowerLimit = i - amountSameValue;
-                        resultDiscTrans.add(new Interval(lowerLimit, i , keyValuePairs));
+                        resultDiscTrans.add(new Interval(lowerLimit, i, keyValuePairs));
                         lowerLimit = i;
                         amountSameValue = 0;
                     }
@@ -57,4 +58,21 @@ public abstract class AbstractSupervisedDiscretizer extends AbstractDiscretizer 
 
         return resultDiscTrans;
     }
+
+    @Override
+    protected final List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
+        final List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs = IntStream.range(0, values.length)
+                .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
+                .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
+                .collect(Collectors.toList());
+        return fitCreateTransitions(keyValuePairs);
+    }
+
+    /**
+     * Fits on the data
+     *
+     * @param keyValuePairs the values and labels to be fitted
+     * @return a {@link Collection} containing the {@link DiscretizationTransition}s
+     */
+    protected abstract List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs);
 }

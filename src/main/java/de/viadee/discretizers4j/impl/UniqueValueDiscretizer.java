@@ -15,10 +15,6 @@ import java.util.stream.Collectors;
  * Discretizer mapping each value type to a unique integer value
  */
 public class UniqueValueDiscretizer extends AbstractDiscretizer {
-    @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
-        return null;
-    }
     private static final long serialVersionUID = -6185947730488220070L;
 
     /**

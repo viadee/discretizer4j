@@ -63,16 +63,14 @@ public abstract class AbstractDiscretizer implements Discretizer {
             throw new IllegalArgumentException("Non-Numeric values can only be discretized with UniqueValue");
         }
 
+
+
+        // Means we are unsupervised -> sort values before
         if(labels == null) {
             Arrays.sort(values);
-            this.discretizationTransitions = fitCreateTransitions(values, labels);
-        } else {
-            List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs = IntStream.range(0, values.length)
-                    .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
-                    .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
-                    .collect(Collectors.toList());
-            this.discretizationTransitions = fitCreateTransitions(keyValuePairs);
         }
+
+        this.discretizationTransitions = fitCreateTransitions(values, labels);
 
         final long distinctDiscretizedValues = discretizationTransitions.stream()
                 .map(DiscretizationTransition::getDiscretizedValue).distinct().count();
@@ -108,14 +106,6 @@ public abstract class AbstractDiscretizer implements Discretizer {
      * @return a {@link Collection} containing the {@link DiscretizationTransition}s
      */
     protected abstract List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels);
-
-    /**
-     * Fits on the data
-     *
-     * @param keyValuePairs the values and labels to be fitted
-     * @return a {@link Collection} containing the {@link DiscretizationTransition}s
-     */
-    protected abstract List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs);
 
     @Override
     public Double apply(Serializable serializable) {

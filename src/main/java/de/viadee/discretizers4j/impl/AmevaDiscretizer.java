@@ -28,11 +28,6 @@ public class AmevaDiscretizer extends AbstractSupervisedDiscretizer {
         super(true);
     }
 
-    @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-        return null;
-    }
-
     /**
      * Implementation of Ameva, 1. sort values and get all CutPoints, 2. Consecutively add new cut points and determine
      * Ameva value (variation of contingency coefficient) of the tentative cut points. Get best cut point of this

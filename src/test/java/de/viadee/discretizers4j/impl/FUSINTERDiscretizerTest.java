@@ -13,19 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class FUSINTERDiscretizerTest {
 
     /**
-     * Tests Step 1 (Sorting) of FUSINTER Algorithm
-     */
-    @Test
-    void testSortingOfArray() {
-        FUSINTERDiscretizer fusinterDiscretizer = new FUSINTERDiscretizer();
-        List<DiscretizationTransition> list = fusinterDiscretizer.fitCreateTransitions(
-                new Serializable[]{1.0, 0.0, 2.0, 3.0, 1.5, 1.6},
-                new Double[]{0D, 0D, 0D, 0D, 1D, 1D}
-        );
-        assertEquals(3, list.size());
-    }
-
-    /**
      * Tests Steps 4-8 (Evaluation of potential merges of the equalClassSplits) of the described Algorithm,
      * Number[][] to be discretized is taken from FUSINTER paper Figure 7.
      */
@@ -81,7 +68,8 @@ class FUSINTERDiscretizerTest {
         }
 
         FUSINTERDiscretizer fusinterDiscretizer = new FUSINTERDiscretizer();
-        List<DiscretizationTransition> list = fusinterDiscretizer.fitCreateTransitions(serializables, doubles);
+        fusinterDiscretizer.fit(serializables, doubles);
+        List<DiscretizationTransition> list = new ArrayList<>(fusinterDiscretizer.getTransitions());
         assertEquals(4, list.size());
     }
 
@@ -257,7 +245,8 @@ class FUSINTERDiscretizerTest {
         }
 
         FUSINTERDiscretizer fusinterDiscretizer = new FUSINTERDiscretizer();
-        List<DiscretizationTransition> list = fusinterDiscretizer.fitCreateTransitions(serializables, doubles);
+        fusinterDiscretizer.fit(serializables, doubles);
+        List<DiscretizationTransition> list = new ArrayList<>(fusinterDiscretizer.getTransitions());
         assertEquals(1, list.size());
     }
 }

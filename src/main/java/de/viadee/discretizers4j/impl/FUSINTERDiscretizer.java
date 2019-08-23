@@ -14,10 +14,6 @@ import java.util.stream.Stream;
  * Implementation of the FUSINTER discretization algorithm described by [Zighed, Rabaséda, Rakotomalala 1998]
  */
 public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
-    @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
-        return null;
-    }
     private final double lambda;
     private final double alpha;
 
@@ -48,25 +44,14 @@ public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
     /**
      * Implementation of FUSINTER, 1. sort, 2. equalClassIntervals 3. merge if entropy improves
      *
-     * @param labels Array of Doubles, classifications of instances
-     * @param values Array of Numbers expected. FUSINTER is only possible with continuous variables
+     * @param keyValuePairs List of Values and Labels
      * @return list of Intervals determined to have the highest entropy
      */
     @Override
-    protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
+    protected List<DiscretizationTransition> fitCreateTransitions(List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
 
-        if (Stream.of(values).anyMatch(v -> !(v instanceof Number))) {
-            throw new IllegalArgumentException("Only numeric values allowed for this discretizer");
-        }
-
-        m = Arrays.stream(labels).sorted().distinct().toArray(Double[]::new).length;
-        n = values.length;
-
-        final List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs = IntStream
-                .range(0, values.length)
-                .mapToObj(i -> new AbstractMap.SimpleImmutableEntry<>(((Number) values[i]).doubleValue(), labels[i]))
-                .sorted(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getKey))
-                .collect(Collectors.toList());
+        m = keyValuePairs.stream().map(AbstractMap.SimpleImmutableEntry::getValue).sorted().distinct().toArray().length;
+        n = keyValuePairs.size();
 
         List<Interval> equalClassSplits = equalClassSplit(keyValuePairs);
         List<Interval> evaluatedIntervals;
