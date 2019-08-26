@@ -22,7 +22,6 @@ public abstract class AbstractSupervisedDiscretizer extends AbstractDiscretizer 
      *
      * @param keyValuePairs, Array of Attribute Class.
      * @return initial List of Intervals
-     * TODO: reduce complexity
      */
     protected List<Interval> equalClassSplit(final List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs) {
         final List<Interval> resultDiscTrans = new ArrayList<>();

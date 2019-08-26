@@ -53,7 +53,7 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
     /**
      * @param minValue the new min value
      */
-    public void setMinValue(Number minValue) {
+    void setMinValue(Number minValue) {
         this.minValue = minValue;
     }
 
@@ -80,14 +80,14 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
     /**
      * @param first true, if this is the first element and the lower boundary should be infinitely open
      */
-    public void setFirst(boolean first) {
+    void setFirst(boolean first) {
         isFirst = first;
     }
 
     /**
      * @param last true, if this is the last element and the upper boundary should be infinitely open
      */
-    public void setLast(boolean last) {
+    void setLast(boolean last) {
         isLast = last;
     }
 

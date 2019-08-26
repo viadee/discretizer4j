@@ -5,7 +5,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class FormatTools {
+class FormatTools {
+
+    private FormatTools() {}
+
     // Decimal Format is not thread safe, so use ThreadLocal
     private static final ThreadLocal<DecimalFormat> ROUND_TO_TWO_FORMATTER = ThreadLocal.withInitial(() -> {
         final DecimalFormat df = new DecimalFormat("#.##");
@@ -20,7 +23,7 @@ public class FormatTools {
      * @param number the number to format
      * @return the formatted output
      */
-    public static String roundToTwo(Number number) {
+    static String roundToTwo(Number number) {
         return ROUND_TO_TWO_FORMATTER.get().format(number);
     }
 }

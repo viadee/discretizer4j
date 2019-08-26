@@ -13,7 +13,7 @@ public abstract class DiscretizationOrigin {
     /**
      * @param featureType the {@link DiscretizationType}
      */
-    protected DiscretizationOrigin(DiscretizationType featureType) {
+    DiscretizationOrigin(DiscretizationType featureType) {
         if (featureType == null) {
             throw new IllegalArgumentException("Discretization feature type may not be null");
         }

@@ -25,26 +25,6 @@ public abstract class AbstractDiscretizer implements Discretizer {
         this.isSupervised = isSupervised;
     }
 
-    private static void distinctMinAndMaxValues(List<Number> numbers, List<DiscretizationTransition> transitions) {
-        for (DiscretizationTransition transition : transitions) {
-            Optional<DiscretizationTransition> relationWhereMinIsMaxOfOther = transitions.stream()
-                    .filter(oTransition -> Objects.equals(
-                            ((NumericDiscretizationOrigin) transition.getDiscretizationOrigin()).getMaxValue(),
-                            ((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin()).getMinValue()))
-                    .filter(oTransition -> transition != oTransition)
-                    .findFirst();
-
-            if (relationWhereMinIsMaxOfOther.isPresent()) {
-                final DiscretizationTransition oTransition = relationWhereMinIsMaxOfOther.get();
-                numbers.stream().map(Number::doubleValue)
-                        .filter((number ->
-                                number > ((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin()).getMinValue().doubleValue()))
-                        .min(Double::compareTo)
-                        .ifPresent(((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin())::setMinValue);
-            }
-        }
-    }
-
     @Override
     public Collection<DiscretizationTransition> getTransitions() {
         return discretizationTransitions;

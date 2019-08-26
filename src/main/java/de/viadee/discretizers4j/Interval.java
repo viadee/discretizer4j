@@ -15,7 +15,6 @@ public final class Interval {
     private final int end;
     private final int size;
     private final int[] classDist;
-    private final List<AbstractMap.SimpleImmutableEntry<Double, Double>> keyValuePairs;
 
     /**
      * @param begin         begin index of Interval
@@ -28,7 +27,6 @@ public final class Interval {
         this.begin = begin;
         this.end = end;
         this.size = end - begin + 1;
-        this.keyValuePairs = keyValuePairs;
 
         for (int t = 0; t < targetValues.length; t++) {
             final int finalT = t;
@@ -55,22 +53,4 @@ public final class Interval {
         return size;
     }
 
-    /**
-     * @return the interval as a {@link DiscretizationTransition}
-     */
-    public DiscretizationTransition toDiscretizationTransition() {
-        return new DiscretizationTransition(new NumericDiscretizationOrigin(
-                keyValuePairs.get(begin).getKey(),
-                keyValuePairs.get(end).getKey()),
-                medianIndexValue()
-        );
-    }
-
-    private double medianIndexValue() {
-        if (getSize() % 2 == 0) {
-            return (keyValuePairs.get(end + 1 - getSize() / 2).getKey() + keyValuePairs.get(end + 1 - getSize() / 2 - 1).getKey()) / 2;
-        } else {
-            return keyValuePairs.get(end - getSize() / 2).getKey();
-        }
-    }
 }
