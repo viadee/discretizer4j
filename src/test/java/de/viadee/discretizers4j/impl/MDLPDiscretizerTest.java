@@ -40,15 +40,15 @@ class MDLPDiscretizerTest {
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(0).getDiscretizationOrigin());
         assertEquals(1D, discOrigin.getMinValue());
-        assertEquals(5D, discOrigin.getMaxValue());
-        assertEquals(3.0, list.get(0).getDiscretizedValue().doubleValue());
+        assertEquals(5.5, discOrigin.getMaxValue());
+        assertEquals(0D, list.get(0).getDiscretizedValue().doubleValue());
         assertTrue(discOrigin.isFirst());
         assertFalse(discOrigin.isLast());
 
         NumericDiscretizationOrigin discOrigin2 = ((NumericDiscretizationOrigin) list.get(1).getDiscretizationOrigin());
-        assertEquals(6D, discOrigin2.getMinValue());
+        assertEquals(5.5, discOrigin2.getMinValue());
         assertEquals(10D, discOrigin2.getMaxValue());
-        assertEquals(8.0, list.get(1).getDiscretizedValue().doubleValue());
+        assertEquals(1D, list.get(1).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin2.isFirst());
         assertTrue(discOrigin2.isLast());
     }
@@ -82,7 +82,7 @@ class MDLPDiscretizerTest {
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(0).getDiscretizationOrigin());
         assertEquals(1D, discOrigin.getMinValue());
         assertEquals(10D, discOrigin.getMaxValue());
-        assertEquals(5.5, list.get(0).getDiscretizedValue().doubleValue());
+        assertEquals(0D, list.get(0).getDiscretizedValue().doubleValue());
         assertTrue(discOrigin.isFirst());
         assertTrue(discOrigin.isLast());
     }
@@ -119,9 +119,9 @@ class MDLPDiscretizerTest {
         List<DiscretizationTransition> list = new ArrayList<>(mdlpDiscretizer.getTransitions());
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(2).getDiscretizationOrigin());
-        assertEquals(11D, discOrigin.getMinValue());
+        assertEquals(10.5, discOrigin.getMinValue());
         assertEquals(15D, discOrigin.getMaxValue());
-        assertEquals(13.0, list.get(2).getDiscretizedValue().doubleValue());
+        assertEquals(2D, list.get(2).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin.isFirst());
         assertTrue(discOrigin.isLast());
     }
@@ -229,12 +229,12 @@ class MDLPDiscretizerTest {
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(0).getDiscretizationOrigin());
         assertEquals(1D, discOrigin.getMinValue());
-        assertEquals(20D, discOrigin.getMaxValue());
+        assertEquals(20.5, discOrigin.getMaxValue());
         assertTrue(discOrigin.isFirst());
         assertFalse(discOrigin.isLast());
 
         NumericDiscretizationOrigin discOrigin2 = ((NumericDiscretizationOrigin) list.get(2).getDiscretizationOrigin());
-        assertEquals(28D, discOrigin2.getMinValue());
+        assertEquals(27.5, discOrigin2.getMinValue());
         assertEquals(60D, discOrigin2.getMaxValue());
         assertFalse(discOrigin2.isFirst());
         assertTrue(discOrigin2.isLast());
@@ -334,9 +334,9 @@ class MDLPDiscretizerTest {
         List<DiscretizationTransition> list = new ArrayList<>(mdlpDiscretizer.getTransitions());
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(2).getDiscretizationOrigin());
-        assertEquals(-5D, discOrigin.getMinValue());
+        assertEquals(-5.5, discOrigin.getMinValue());
         assertEquals(-1D, discOrigin.getMaxValue());
-        assertEquals(-3.0, list.get(2).getDiscretizedValue().doubleValue());
+        assertEquals(2D, list.get(2).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin.isFirst());
         assertTrue(discOrigin.isLast());
 

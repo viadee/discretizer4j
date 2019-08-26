@@ -5,7 +5,6 @@ import de.viadee.discretizers4j.impl.UniqueValueDiscretizer;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -24,6 +23,26 @@ public abstract class AbstractDiscretizer implements Discretizer {
      */
     protected AbstractDiscretizer(boolean isSupervised) {
         this.isSupervised = isSupervised;
+    }
+
+    private static void distinctMinAndMaxValues(List<Number> numbers, List<DiscretizationTransition> transitions) {
+        for (DiscretizationTransition transition : transitions) {
+            Optional<DiscretizationTransition> relationWhereMinIsMaxOfOther = transitions.stream()
+                    .filter(oTransition -> Objects.equals(
+                            ((NumericDiscretizationOrigin) transition.getDiscretizationOrigin()).getMaxValue(),
+                            ((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin()).getMinValue()))
+                    .filter(oTransition -> transition != oTransition)
+                    .findFirst();
+
+            if (relationWhereMinIsMaxOfOther.isPresent()) {
+                final DiscretizationTransition oTransition = relationWhereMinIsMaxOfOther.get();
+                numbers.stream().map(Number::doubleValue)
+                        .filter((number ->
+                                number > ((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin()).getMinValue().doubleValue()))
+                        .min(Double::compareTo)
+                        .ifPresent(((NumericDiscretizationOrigin) oTransition.getDiscretizationOrigin())::setMinValue);
+            }
+        }
     }
 
     @Override
@@ -59,14 +78,13 @@ public abstract class AbstractDiscretizer implements Discretizer {
             throw new IllegalArgumentException("Discretizer has already been fitted");
         }
 
-        if(Stream.of(values).anyMatch(v -> !(v instanceof Number)) && !(this instanceof UniqueValueDiscretizer)) {
+        if (Stream.of(values).anyMatch(v -> !(v instanceof Number)) && !(this instanceof UniqueValueDiscretizer)) {
             throw new IllegalArgumentException("Non-Numeric values can only be discretized with UniqueValue");
         }
 
 
-
         // Means we are unsupervised -> sort values before
-        if(labels == null) {
+        if (labels == null) {
             Arrays.sort(values);
         }
 
@@ -116,28 +134,26 @@ public abstract class AbstractDiscretizer implements Discretizer {
         return discretizationTransition.getDiscretizedValue();
     }
 
-    protected final List<DiscretizationTransition> getDiscretizationTransitionsFromDouble(List<Double> actualCutPoints, Double min, Double max) {
+    protected final List<DiscretizationTransition> getDiscretizationTransitionsFromCutPoints(List<Double> actualCutPoints, Double min, Double max) {
         final List<DiscretizationTransition> result = new ArrayList<>();
-        actualCutPoints = actualCutPoints.stream().sorted().distinct().collect(Collectors.toList());
+        actualCutPoints = actualCutPoints.stream().sorted().distinct()
+                .filter(cutPoint -> !cutPoint.equals(min) && !cutPoint.equals(max))
+                .collect(Collectors.toList());
 
         Double currentLowerBoundary = min;
         double index = 0D;
 
         for (Double cutPoint : actualCutPoints) {
             result.add(new DiscretizationTransition(
-                    new NumericDiscretizationOrigin(currentLowerBoundary, cutPoint),
-                    index));
+                    new NumericDiscretizationOrigin(currentLowerBoundary, cutPoint), index)
+            );
             currentLowerBoundary = cutPoint;
             index++;
         }
 
-        if (result.isEmpty()
-                || (!((NumericDiscretizationOrigin) result.get(result.size() - 1).getDiscretizationOrigin()).getMaxValue().equals(max)
-                || !((NumericDiscretizationOrigin) result.get(result.size() - 1).getDiscretizationOrigin()).getMinValue().equals(max))) {
-            result.add(new DiscretizationTransition(
-                    new NumericDiscretizationOrigin(currentLowerBoundary, max),
-                    index));
-        }
+        result.add(new DiscretizationTransition(
+                new NumericDiscretizationOrigin(currentLowerBoundary, max), index)
+        );
 
         return result;
     }

@@ -186,36 +186,36 @@ class FUSINTERDiscretizerTest {
 
         NumericDiscretizationOrigin discOrigin = ((NumericDiscretizationOrigin) list.get(0).getDiscretizationOrigin());
         assertEquals(1D, discOrigin.getMinValue());
-        assertEquals(14D, discOrigin.getMaxValue());
-        assertEquals(8.5, list.get(0).getDiscretizedValue().doubleValue());
+        assertEquals(14.5, discOrigin.getMaxValue());
+        assertEquals(0D, list.get(0).getDiscretizedValue().doubleValue());
         assertTrue(discOrigin.isFirst());
         assertFalse(discOrigin.isLast());
 
         NumericDiscretizationOrigin discOrigin1 = ((NumericDiscretizationOrigin) list.get(1).getDiscretizationOrigin());
-        assertEquals(15D, discOrigin1.getMinValue());
-        assertEquals(19D, discOrigin1.getMaxValue());
-        assertEquals(17.0, list.get(1).getDiscretizedValue().doubleValue());
+        assertEquals(14.5, discOrigin1.getMinValue());
+        assertEquals(19.5, discOrigin1.getMaxValue());
+        assertEquals(1D, list.get(1).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin1.isFirst());
         assertFalse(discOrigin1.isLast());
 
         NumericDiscretizationOrigin discOrigin2 = ((NumericDiscretizationOrigin) list.get(2).getDiscretizationOrigin());
-        assertEquals(20D, discOrigin2.getMinValue());
-        assertEquals(22D, discOrigin2.getMaxValue());
-        assertEquals(22.0, list.get(2).getDiscretizedValue().doubleValue());
+        assertEquals(19.5, discOrigin2.getMinValue());
+        assertEquals(22.5, discOrigin2.getMaxValue());
+        assertEquals(2D, list.get(2).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin2.isFirst());
         assertFalse(discOrigin2.isLast());
 
         NumericDiscretizationOrigin discOrigin3 = ((NumericDiscretizationOrigin) list.get(3).getDiscretizationOrigin());
-        assertEquals(23D, discOrigin3.getMinValue());
-        assertEquals(36D, discOrigin3.getMaxValue());
-        assertEquals(30.0, list.get(3).getDiscretizedValue().doubleValue());
+        assertEquals(22.5, discOrigin3.getMinValue());
+        assertEquals(36.5, discOrigin3.getMaxValue());
+        assertEquals(3D, list.get(3).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin3.isFirst());
         assertFalse(discOrigin3.isLast());
 
         NumericDiscretizationOrigin discOrigin4 = ((NumericDiscretizationOrigin) list.get(4).getDiscretizationOrigin());
-        assertEquals(37D, discOrigin4.getMinValue());
+        assertEquals(36.5, discOrigin4.getMinValue());
         assertEquals(40D, discOrigin4.getMaxValue());
-        assertEquals(38.0, list.get(4).getDiscretizedValue().doubleValue());
+        assertEquals(4D, list.get(4).getDiscretizedValue().doubleValue());
         assertFalse(discOrigin4.isFirst());
         assertTrue(discOrigin4.isLast());
 

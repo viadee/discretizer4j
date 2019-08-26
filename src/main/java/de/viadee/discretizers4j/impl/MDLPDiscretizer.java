@@ -46,16 +46,17 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
         }
         determineIntervals(0, keyValuePairs.size() - 1);
 
-        List<Interval> evaluatedIntervals = new ArrayList<>();
+        List<Double> actualCutPoints = new ArrayList<>();
         Collections.sort(actualIntervalEnds);
-        int begin = 0;
         for (Integer end : actualIntervalEnds) {
-            evaluatedIntervals.add(new Interval(begin, end, keyValuePairs));
-            begin = end + 1;
+            actualCutPoints.add(
+                    (keyValuePairs.get(end).getKey()
+                    + keyValuePairs.get(end + 1).getKey())
+                    / 2D
+            );
         }
-        evaluatedIntervals.add(new Interval(begin, keyValuePairs.size() - 1, keyValuePairs));
 
-        return evaluatedIntervals.stream().map(Interval::toDiscretizationTransition).collect(Collectors.toList());
+        return getDiscretizationTransitionsFromCutPoints(actualCutPoints, keyValuePairs.get(0).getKey(), keyValuePairs.get(keyValuePairs.size() - 1).getKey());
     }
 
     /**

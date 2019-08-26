@@ -4,7 +4,6 @@ import de.viadee.discretizers4j.AbstractDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ public class EqualSizeDiscretizer extends AbstractDiscretizer {
     /**
      * creates a {@link PercentileMedianDiscretizer} which creates intervals, that are the same size. In actual datasets
      * a minimum size of 30 is recommended by [Weiss, 2002]
+     *
      * @param classSize size of Intervals to be created. Might be changed slightly if values length is not divisible by it
      */
     public EqualSizeDiscretizer(int classSize) {
@@ -34,18 +34,19 @@ public class EqualSizeDiscretizer extends AbstractDiscretizer {
     /**
      * creates the {@link DiscretizationTransition} of the values. Each transition will have the same size. If no size
      * is given as a parameter in the constructor, a PKID will be created.
+     *
      * @param values the values to be fitted on
      * @param labels the labels. != null, iff supervised
      * @return list of Transisitions, created by {@link PercentileMedianDiscretizer}. All will have the same length.
      */
     @Override
     protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
-        if(classSize == 0) {
+        if (classSize == 0) {
             classSize = (int) Math.sqrt(values.length);
         } else if (classSize >= values.length) {
             classSize = values.length;
         }
-        PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer((values.length/ classSize));
+        PercentileMedianDiscretizer percentileMedianDiscretizer = new PercentileMedianDiscretizer((values.length / classSize));
         return percentileMedianDiscretizer.fitCreateTransitions(values, null);
     }
 }

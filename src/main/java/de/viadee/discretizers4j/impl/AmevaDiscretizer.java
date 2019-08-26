@@ -4,11 +4,12 @@ import de.viadee.discretizers4j.AbstractSupervisedDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 import de.viadee.discretizers4j.Interval;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Implementation of the Ameva discretization algorithm described by [Gonzales-Abril, Cuberos, Velasco, Ortega 2009]
@@ -44,13 +45,13 @@ public class AmevaDiscretizer extends AbstractSupervisedDiscretizer {
         for (int i = 0; i < targetValues.length; i++) {
             int finalI = i;
             targetValueDistribution[i] = keyValuePairs.stream().map(AbstractMap.SimpleImmutableEntry::getValue)
-                                        .filter(label -> label.equals(targetValues[finalI])).count();
+                    .filter(label -> label.equals(targetValues[finalI])).count();
         }
 
-        bCutPoints = IntStream.range(1, keyValuePairs.size())
-                .mapToObj(i -> (((Number) keyValuePairs.get(i).getKey()).doubleValue() + ((Number) keyValuePairs.get(i).getKey()).doubleValue() / 2))
-                        .sorted().distinct()
-                        .collect(Collectors.toList());
+        bCutPoints = IntStream.range(0, keyValuePairs.size() - 1)
+                .mapToObj(i -> ((( keyValuePairs.get(i).getKey()) + ( keyValuePairs.get(i + 1).getKey())) / 2))
+                .sorted().distinct()
+                .collect(Collectors.toList());
 
         double globalAmeva = 0.0;
         double ameva = createNewCutPoint(globalAmeva);
@@ -63,15 +64,7 @@ public class AmevaDiscretizer extends AbstractSupervisedDiscretizer {
             ameva = createNewCutPoint(globalAmeva);
         }
 
-        if (actualCutPoints.isEmpty()) {
-            List<DiscretizationTransition> discretizationTransitions = new ArrayList<>();
-            discretizationTransitions.add(new Interval(0, keyValuePairs.size() - 1, keyValuePairs).toDiscretizationTransition());
-            return discretizationTransitions;
-        }
-
-        Collections.sort(actualCutPoints);
-        List<Interval> evaluatedIntervals = getIntervalsFromCutPoints(actualCutPoints);
-        return evaluatedIntervals.stream().map(Interval::toDiscretizationTransition).collect(Collectors.toList());
+        return getDiscretizationTransitionsFromCutPoints(actualCutPoints, keyValuePairs.get(0).getKey(), keyValuePairs.get(keyValuePairs.size() - 1).getKey());
     }
 
     /**

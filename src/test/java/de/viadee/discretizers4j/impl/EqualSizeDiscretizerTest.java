@@ -35,7 +35,7 @@ class EqualSizeDiscretizerTest {
         equalSizeDiscretizer.fit(values);
         Collection<DiscretizationTransition> transitionList = equalSizeDiscretizer.getTransitions();
 
-        assertEquals(3, transitionList.size());
+        assertEquals(2, transitionList.size());
     }
 
     @Test

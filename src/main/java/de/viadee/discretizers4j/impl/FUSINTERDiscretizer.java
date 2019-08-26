@@ -54,10 +54,16 @@ public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
         n = keyValuePairs.size();
 
         List<Interval> equalClassSplits = equalClassSplit(keyValuePairs);
-        List<Interval> evaluatedIntervals;
-        evaluatedIntervals = evaluateIntervals(equalClassSplits, keyValuePairs);
+        List<Interval> evaluatedIntervals = evaluateIntervals(equalClassSplits, keyValuePairs);
+        List<Double> actualCutPoints = new ArrayList<>();
+        for(int i = 0; i < evaluatedIntervals.size() - 1; i++) {
+            actualCutPoints.add(
+                    (keyValuePairs.get(evaluatedIntervals.get(i).getEnd()).getKey()
+                    + keyValuePairs.get(evaluatedIntervals.get(i + 1).getBegin()).getKey())
+                    / 2D);
+        }
 
-        return evaluatedIntervals.stream().map(Interval::toDiscretizationTransition).collect(Collectors.toList());
+        return getDiscretizationTransitionsFromCutPoints(actualCutPoints, keyValuePairs.get(0).getKey(), keyValuePairs.get(keyValuePairs.size() - 1).getKey());
     }
 
     private List<Interval> evaluateIntervals(List<Interval> equalClassSplits,

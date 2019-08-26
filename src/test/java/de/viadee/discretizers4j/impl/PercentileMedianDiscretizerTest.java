@@ -52,7 +52,7 @@ class PercentileMedianDiscretizerTest {
         percentileMedianDiscretizer.fit(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
 
         List<DiscretizationTransition> list = new ArrayList<>(percentileMedianDiscretizer.getTransitions());
-        assertEquals(2, list.size());
+        assertEquals(1, list.size());
 
     }
 }
