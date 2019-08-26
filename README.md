@@ -1,2 +1,62 @@
 # discretizer4j
-Discretize all the things!
+
+This project provides a Java implementation of several discretization algorithms. 
+
+## Getting Started
+
+
+### Prerequisites and Installation
+
+In order to use the core project, no prerequisites and installation is are required. 
+There are no dependencies and the algorithm may be used by providing the required interfaces.
+
+### Using the Algorithm
+
+To discretize a continuous feature, one has to create a Discretizer (extending the ``AbstractDiscretizer``). The Discretizer then has to be fitted.
+This may be built as follows: 
+
+```Java
+Discretizer discretizer = new Discretizer();
+discretizer.fit(values, labels);
+```
+The fitted discretizer can then be used to get all ``DiscretizerTransitions``, that have been fitted by the algorithm. 
+Or values can be applied to the discretizer, the apply function returns the discretized labels.
+
+```Java
+discretizer.getTransitions();
+// returns:
+// DiscretizationTransition From ]1, 14.5) to class 0.0
+// DiscretizationTransition From [14.5, 19.5) to class 1.0
+// DiscretizationTransition From [19.5, 22.5) to class 2.0
+// DiscretizationTransition From [22.5, 36.5) to class 3.0
+// DiscretizationTransition From [36.5, 40[ to class 4.0
+
+discretizer.apply(new Double[]{1.5, 17.0, 10.0})
+// returns:
+// Double[0.0, 1.0, 0.0]
+```
+
+The fitting creates ``DiscretizerTransitions``. These consist of a discretizedLabel (Double) and a discretizedOrigin. 
+The Origin is either a unique value, if the ``UniqueValueDiscretizer`` was used, or a combination of a minValue and maxValue, which determine the Interval limits of the Transition. 
+
+### Tutorials and Examples
+
+Small for all implemented discretizers can be found in the Unit-Tests. 
+
+To see these discretizers in a more complex project, please refer to the [XAI Examples](https://github.com/viadee/xai_examples). Here discretization was used in the context of explainable artificial intelligence. 
+
+# Collaboration
+
+The project is operated and further developed by the viadee Consulting AG in Münster, Westphalia. Results from theses at the WWU Münster and the FH Münster have been incorporated. Contact person is Dr. Frank Köhne from viadee.
+* Implementation of additional Discretizers ar planned.
+* Community contributions to the project are welcome: Please open Github-Issues with suggestions (or PR), which we can then edit in the team.
+
+## Authors
+* **Marvin Gronhorst** - [MarvinGronhorst](https://github.com/MarvinGronhorst)
+* **Tobias Goerke** - [TobiasGoerke](https://github.com/TobiasGoerke)
+* **Dr. Frank Köhne** - [Dr. Frank Köhne](https://github.com/fkoehne)
+
+## License
+
+BSD 3-Clause License
+
