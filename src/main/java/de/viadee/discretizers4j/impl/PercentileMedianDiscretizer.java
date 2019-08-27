@@ -14,7 +14,6 @@ import java.util.stream.Stream;
  * Discretizer partitioning data into n specified classes using their mean values as a class label
  */
 public class PercentileMedianDiscretizer extends AbstractDiscretizer {
-    private final boolean classReduction;
     private int classCount;
 
     /**
@@ -23,19 +22,8 @@ public class PercentileMedianDiscretizer extends AbstractDiscretizer {
      * @param classCount count of classes
      */
     public PercentileMedianDiscretizer(int classCount) {
-        this(classCount, true);
-    }
-
-    /**
-     * Constructs the instance
-     *
-     * @param classCount     count of classes
-     * @param classReduction if true, classes will be merged having the same discretized value
-     */
-    public PercentileMedianDiscretizer(int classCount, boolean classReduction) {
         super(false);
         this.classCount = classCount;
-        this.classReduction = classReduction;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class EqualSizeDiscretizer extends AbstractDiscretizer {
     }
 
     /**
-     * creates a {@link PercentileMedianDiscretizer} which creates intervals, that are the same size. In actual datasets
+     * creates a {@link PercentileMedianDiscretizer} which creates intervals, that are the same size. In actual data
      * a minimum size of 30 is recommended by [Weiss, 2002]
      *
      * @param classSize size of Intervals to be created. Might be changed slightly if values length is not divisible by it
@@ -37,7 +37,7 @@ public class EqualSizeDiscretizer extends AbstractDiscretizer {
      *
      * @param values the values to be fitted on
      * @param labels the labels. != null, iff supervised
-     * @return list of Transisitions, created by {@link PercentileMedianDiscretizer}. All will have the same length.
+     * @return list of transitions, created by {@link PercentileMedianDiscretizer}. All will have the same length.
      */
     @Override
     protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {

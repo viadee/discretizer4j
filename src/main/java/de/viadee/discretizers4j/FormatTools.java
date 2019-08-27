@@ -7,8 +7,6 @@ import java.util.Locale;
 
 class FormatTools {
 
-    private FormatTools() {}
-
     // Decimal Format is not thread safe, so use ThreadLocal
     private static final ThreadLocal<DecimalFormat> ROUND_TO_TWO_FORMATTER = ThreadLocal.withInitial(() -> {
         final DecimalFormat df = new DecimalFormat("#.##");
@@ -16,6 +14,9 @@ class FormatTools {
         df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.US));
         return df;
     });
+
+    private FormatTools() {
+    }
 
     /**
      * Rounds a number to closest two decimals

@@ -49,7 +49,7 @@ public class AmevaDiscretizer extends AbstractSupervisedDiscretizer {
         }
 
         bCutPoints = IntStream.range(0, keyValuePairs.size() - 1)
-                .mapToObj(i -> ((( keyValuePairs.get(i).getKey()) + ( keyValuePairs.get(i + 1).getKey())) / 2))
+                .mapToObj(i -> (((keyValuePairs.get(i).getKey()) + (keyValuePairs.get(i + 1).getKey())) / 2))
                 .sorted().distinct()
                 .collect(Collectors.toList());
 

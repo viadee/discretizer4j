@@ -4,11 +4,9 @@ import de.viadee.discretizers4j.AbstractSupervisedDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 import de.viadee.discretizers4j.Interval;
 
-import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of the FUSINTER discretization algorithm described by [Zighed, Rabaséda, Rakotomalala 1998]
@@ -56,11 +54,11 @@ public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
         List<Interval> equalClassSplits = equalClassSplit(keyValuePairs);
         List<Interval> evaluatedIntervals = evaluateIntervals(equalClassSplits, keyValuePairs);
         List<Double> actualCutPoints = new ArrayList<>();
-        for(int i = 0; i < evaluatedIntervals.size() - 1; i++) {
+        for (int i = 0; i < evaluatedIntervals.size() - 1; i++) {
             actualCutPoints.add(
                     (keyValuePairs.get(evaluatedIntervals.get(i).getEnd()).getKey()
-                    + keyValuePairs.get(evaluatedIntervals.get(i + 1).getBegin()).getKey())
-                    / 2D);
+                            + keyValuePairs.get(evaluatedIntervals.get(i + 1).getBegin()).getKey())
+                            / 2D);
         }
 
         return getDiscretizationTransitionsFromCutPoints(actualCutPoints, keyValuePairs.get(0).getKey(), keyValuePairs.get(keyValuePairs.size() - 1).getKey());
@@ -72,18 +70,18 @@ public class FUSINTERDiscretizer extends AbstractSupervisedDiscretizer {
 
         while (equalClassSplits.size() > 1 && improvement) {
             int deleteIndex = 0;
-            double maxMergeCrit = 0.0;
-            double oldCrit = determineDiscretizationCriterion(equalClassSplits);
+            double maxMergeCriterion = 0.0;
+            double oldCriterion = determineDiscretizationCriterion(equalClassSplits);
             for (int i = 0; i < equalClassSplits.size() - 1; i++) {
                 List<Interval> possibleMergedInterval = mergeInterval(equalClassSplits, i, keyValuePairs);
-                final double mergeCrit = oldCrit - determineDiscretizationCriterion(possibleMergedInterval);
-                if (mergeCrit > maxMergeCrit) {
+                final double mergeCriterion = oldCriterion - determineDiscretizationCriterion(possibleMergedInterval);
+                if (mergeCriterion > maxMergeCriterion) {
                     deleteIndex = i;
-                    maxMergeCrit = mergeCrit;
+                    maxMergeCriterion = mergeCriterion;
                 }
             }
 
-            if (maxMergeCrit > 0) {
+            if (maxMergeCriterion > 0) {
                 equalClassSplits = mergeInterval(equalClassSplits, deleteIndex, keyValuePairs);
             } else {
                 improvement = false;

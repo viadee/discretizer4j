@@ -78,20 +78,6 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
     }
 
     /**
-     * @param first true, if this is the first element and the lower boundary should be infinitely open
-     */
-    void setFirst(boolean first) {
-        isFirst = first;
-    }
-
-    /**
-     * @param last true, if this is the last element and the upper boundary should be infinitely open
-     */
-    void setLast(boolean last) {
-        isLast = last;
-    }
-
-    /**
      * @return is lower boundary open
      */
     public boolean isFirst() {
@@ -99,9 +85,23 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
     }
 
     /**
+     * @param first true, if this is the first element and the lower boundary should be infinitely open
+     */
+    void setFirst(boolean first) {
+        isFirst = first;
+    }
+
+    /**
      * @return is upper boundary open
      */
     public boolean isLast() {
         return isLast;
+    }
+
+    /**
+     * @param last true, if this is the last element and the upper boundary should be infinitely open
+     */
+    void setLast(boolean last) {
+        isLast = last;
     }
 }

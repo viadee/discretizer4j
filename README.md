@@ -1,6 +1,7 @@
 # discretizer4j
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Build Status](https://travis-ci.org/viadee/discretizer4j.svg?branch=master)](https://travis-ci.org/viadee/discretizer4j)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.viadee%3Adiscretizer4j&metric=coverage)](https://sonarcloud.io/dashboard?id=de.viadee%3Adiscretizer4j)
 
 This project provides a Java implementation of several discretization algorithms (aka binning).
 

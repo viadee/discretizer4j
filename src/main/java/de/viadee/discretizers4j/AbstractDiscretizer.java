@@ -3,7 +3,10 @@ package de.viadee.discretizers4j;
 import de.viadee.discretizers4j.impl.UniqueValueDiscretizer;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

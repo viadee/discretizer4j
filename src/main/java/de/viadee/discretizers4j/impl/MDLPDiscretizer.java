@@ -4,11 +4,8 @@ import de.viadee.discretizers4j.AbstractSupervisedDiscretizer;
 import de.viadee.discretizers4j.DiscretizationTransition;
 import de.viadee.discretizers4j.Interval;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
 
@@ -51,8 +48,8 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
         for (Integer end : actualIntervalEnds) {
             actualCutPoints.add(
                     (keyValuePairs.get(end).getKey()
-                    + keyValuePairs.get(end + 1).getKey())
-                    / 2D
+                            + keyValuePairs.get(end + 1).getKey())
+                            / 2D
             );
         }
 
@@ -116,7 +113,7 @@ public class MDLPDiscretizer extends AbstractSupervisedDiscretizer {
      * determines the entropy of an interval
      *
      * @param interval {@link Interval} to be evaluated
-     * @return double value of "Shannons Entropy".
+     * @return double value of "Shannon's Entropy".
      */
     private double computeEntropy(Interval interval) {
         double entropy = 0;

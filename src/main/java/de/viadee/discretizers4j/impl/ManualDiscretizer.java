@@ -46,14 +46,14 @@ public class ManualDiscretizer extends AbstractDiscretizer {
     protected List<DiscretizationTransition> fitCreateTransitions(Serializable[] values, Double[] labels) {
         final List<DiscretizationTransition> result = new ArrayList<>();
 
-        final List<Double> vals = Stream.of(values).map(v -> ((Number) v).doubleValue()).collect(Collectors.toList());
+        final List<Double> streamedValues = Stream.of(values).map(v -> ((Number) v).doubleValue()).collect(Collectors.toList());
 
         final Double min = classBoundaries.isEmpty()
-                ? Collections.min(vals)
-                : Math.min(Collections.min(vals), Collections.min(classBoundaries));
+                ? Collections.min(streamedValues)
+                : Math.min(Collections.min(streamedValues), Collections.min(classBoundaries));
         final Double max = classBoundaries.isEmpty()
-                ? Collections.max(vals)
-                : Math.max(Collections.max(vals), Collections.max(classBoundaries));
+                ? Collections.max(streamedValues)
+                : Math.max(Collections.max(streamedValues), Collections.max(classBoundaries));
 
         Double currentLowerBoundary = min;
 

@@ -5,7 +5,6 @@ import de.viadee.discretizers4j.CategoricalDiscretizationOrigin;
 import de.viadee.discretizers4j.DiscretizationTransition;
 
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
