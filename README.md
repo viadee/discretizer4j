@@ -1,14 +1,28 @@
 # discretizer4j
 
-This project provides a Java implementation of several discretization algorithms. 
+This project provides a Java implementation of several discretization algorithms (aka binning).
+
+This is often a useful step in order to cope with overfitting in machine learning models or overly specific explanations from XAI algorithms such as [Anchors](https://github.com/viadee/javaAnchorExplainer), when working with numerical data.
+
+We concentrate on univariate algorithms, both supervised and unsupervised, to keep things simple and away from decision tree algorithms.
+We chose the Java language to achieve a reasonable performance, to easily integrate with AnchorsJ (and because we did not find any other  suitable open source java package).
 
 ## Getting Started
 
 
 ### Prerequisites and Installation
 
-In order to use the core project, no prerequisites and installation is are required. 
-There are no dependencies and the algorithm may be used by providing the required interfaces.
+In order to use the core project, no installation other than Java (version 8+) is are required. The intended way of using the algorithms is to use them as a maven depencency. Our maven coordinates are as follows:
+
+```xml
+  <dependency>
+    <groupId>de.viadee</groupId>
+    <artifactId>discretizer4j</artifactId>
+    <version>1.0-SNAPSHOT</version>    
+  </dependency>
+```
+    
+There are no transitive dependencies.
 
 ### Using the Algorithm
 
@@ -41,7 +55,7 @@ The Origin is either a unique value, if the ``UniqueValueDiscretizer`` was used,
 
 ### Tutorials and Examples
 
-Small for all implemented discretizers can be found in the Unit-Tests. 
+Small examples for all implemented discretizers can be found in the unit tests. 
 
 To see these discretizers in a more complex project, please refer to the [XAI Examples](https://github.com/viadee/xai_examples). Here discretization was used in the context of explainable artificial intelligence. 
 
