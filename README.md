@@ -1,5 +1,6 @@
 # discretizer4j
-
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://travis-ci.org/viadee/javaAnchorExplainer.svg?branch=master)](https://travis-ci.org/viadee/discretizer4j)
 This project provides a Java implementation of several discretization algorithms (aka binning).
 
 This is often a useful step in order to cope with overfitting in machine learning models or overly specific explanations from XAI algorithms such as [Anchors](https://github.com/viadee/javaAnchorExplainer), when working with numerical data.
