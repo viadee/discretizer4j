@@ -7,6 +7,17 @@ This is often a useful step in order to cope with overfitting in machine learnin
 We concentrate on univariate algorithms, both supervised and unsupervised, to keep things simple and away from decision tree algorithms.
 We chose the Java language to achieve a reasonable performance, to easily integrate with AnchorsJ (and because we did not find any other  suitable open source java package).
 
+Current implementations:
+* Unsupervised: 
+    * Equal Frequency in ``PercentileMedianDiscretizer``
+    * [Equal Size](http://users.monash.edu/~webb/Files/YangWebb03b.pdf) in ``EqualSizeDiscretizer``
+    * [Proportional k-Interval Discretizer](http://users.monash.edu/~webb/Files/YangWebb03b.pdf) in ``EqualSizeDiscretizer``
+    * Manual Discretization in ``ManualDiscretizer``
+    * Random Discretization in ``RandomDiscretizer``
+* Supervised: 
+    * [FUSINTER Discretizer](https://www.researchgate.net/publication/220354451_FUSINTER_A_Method_for_Discretization_of_Continuous_Attributes) in ``FUSINTERDiscretizer``
+    * [Minimum Description Length Principle Discretizer](https://www.ijcai.org/Proceedings/93-2/Papers/022.pdf) in ``MDLPDiscretizer``
+    * [Ameva Discretizer](https://sci2s.ugr.es/keel/pdf/algorithm/articulo/2009-Gonzalez-Abril-ESWA.pdf) in ``AmevaDiscretizer``
 ## Getting Started
 
 
@@ -66,11 +77,16 @@ The project is operated and further developed by the viadee Consulting AG in Mü
 * Community contributions to the project are welcome: Please open Github-Issues with suggestions (or PR), which we can then edit in the team.
 
 ## Authors
-* **Marvin Gronhorst** - [MarvinGronhorst](https://github.com/MarvinGronhorst)
-* **Tobias Goerke** - [TobiasGoerke](https://github.com/TobiasGoerke)
+* **Marvin Gronhorst** - [Marvin Gronhorst](https://github.com/MarvinGronhorst)
+* **Tobias Goerke** - [Tobias Goerke](https://github.com/TobiasGoerke)
+* **Colin Juers** - [Colin Juers](https://github.com/cjuers)
 * **Dr. Frank Köhne** - [Dr. Frank Köhne](https://github.com/fkoehne)
+ 
 
 ## License
 
 BSD 3-Clause License
 
+## Acknowledgments
+
+[Garcia et al.](https://sci2s.ugr.es/sites/default/files/files/ComplementaryMaterial/discretization/2013-Garcia-IEEETKDE.pdf) for the extensive research of discretization techniques. 
