@@ -33,6 +33,12 @@
             <organization>viadee Unternehmensberatung AG</organization>
             <organizationUrl>http://www.viadee.de</organizationUrl>
         </developer>
+        <developer>
+            <name>Marvin Gronhorst</name>
+            <email>marvin.gronhorst@gmail.de</email>
+            <organization>viadee Unternehmensberatung AG</organization>
+            <organizationUrl>http://www.viadee.de</organizationUrl>
+        </developer>
     </developers>
 
     <scm>
