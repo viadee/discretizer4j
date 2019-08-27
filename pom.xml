@@ -6,7 +6,7 @@
 
     <groupId>de.viadee</groupId>
     <artifactId>discretizer4j</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>discretizer4j</name>
     <description>
@@ -36,6 +36,18 @@
         <developer>
             <name>Marvin Gronhorst</name>
             <email>marvin.gronhorst@gmail.de</email>
+            <organization>viadee Unternehmensberatung AG</organization>
+            <organizationUrl>http://www.viadee.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>Tobias Goerke</name>
+            <email>Tobias.Goerke@viadee.de</email>
+            <organization>viadee Unternehmensberatung AG</organization>
+            <organizationUrl>http://www.viadee.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>Colin Juers</name>
+            <email>Colin.Juers@viadee.de</email>
             <organization>viadee Unternehmensberatung AG</organization>
             <organizationUrl>http://www.viadee.de</organizationUrl>
         </developer>

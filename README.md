@@ -29,7 +29,7 @@ In order to use the core project, no installation other than Java (version 8+) i
   <dependency>
     <groupId>de.viadee</groupId>
     <artifactId>discretizer4j</artifactId>
-    <version>1.0-SNAPSHOT</version>    
+    <version>1.0.0</version>    
   </dependency>
 ```
     
