@@ -22,6 +22,12 @@ public class NumericDiscretizationOrigin extends DiscretizationOrigin {
         if (minValue == null || maxValue == null) {
             throw new IllegalArgumentException("Both min and max value must not be null");
         }
+        if (minValue.doubleValue() > maxValue.doubleValue()) {
+            // Swap if ordering incorrect
+            final Number temp = minValue;
+            minValue = maxValue;
+            maxValue = temp;
+        }
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
