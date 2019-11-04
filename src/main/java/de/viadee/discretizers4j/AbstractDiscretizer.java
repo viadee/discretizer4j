@@ -65,6 +65,9 @@ public abstract class AbstractDiscretizer implements Discretizer {
             throw new IllegalArgumentException("Non-Numeric values can only be discretized with UniqueValue");
         }
 
+        values = Arrays.copyOf(values, values.length);
+        labels = (labels == null) ? null : Arrays.copyOf(labels, labels.length);
+
 
         // Means we are unsupervised -> sort values before
         if (labels == null) {
